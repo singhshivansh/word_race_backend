@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 
 const DB = 'mongodb+srv://shivansh:wordrace@wordrace.mcvid.mongodb.net/WordRace?retryWrites=true&w=majority'
 
-mongoose.connect(DB)
+mongoose.connect(DB, {
+    useNewUrlParser: true
+})
 .then(res=>{
     console.log("Connected");
 })
@@ -12,7 +14,7 @@ mongoose.connect(DB)
 const app = express();
 app.use(express.json());
 
-const port = 8000;
+const port = 5000;
 
 const Player = require('./model/playerSchema');
 
@@ -30,11 +32,11 @@ app.post('/insert_player', (req, res)=>{
     const data = req.body;
     const newPlayer = new Player({name : data.name, score : data.score});
     newPlayer.save().then(res=>{
-        res.status(201).json({'status' : 'player created successfully'})
+        res.status(201).send({'status' : 'player created successfully'})
     }).catch(err=>{
-        res.status(500).json({'status' : err});
+        res.status(500).send({'status' : err});
     })
-    res.send({'status' : 'success'});
+    // res.send({'status' : 'success'});
 })
 
 
