@@ -14,7 +14,7 @@ mongoose.connect(DB, {
 const app = express();
 app.use(express.json());
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 const Player = require('./model/playerSchema');
 
