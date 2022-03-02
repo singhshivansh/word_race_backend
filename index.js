@@ -32,7 +32,7 @@ app.post('/insert_player', (req, res)=>{
     const data = req.body;
     const newPlayer = new Player({name : data.name, score : data.score});
     newPlayer.save().then(response=>{
-        res.status(201).send({'status' : 'player created successfully'})
+        res.status(201).send({'status' : response})
     }).catch(err=>{
         res.status(500).send({'status' : err});
     })
