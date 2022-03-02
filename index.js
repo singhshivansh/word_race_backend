@@ -19,12 +19,12 @@ const port = process.env.PORT || 5000;
 const Player = require('./model/playerSchema');
 
 app.get('/', (req, res) => {
-    // Player.find({}, (err, players)=>{
-    //     if(err)
-    //         res.send(err);
-    //     res.send(players);
-    // })
-    res.send('Hello World!')
+    Player.find({}, (err, players)=>{
+        if(err)
+            res.send(err);
+        res.send(players);
+    })
+    // res.send('Hello World!')
 })
 
 app.post('/insert_player', (req, res)=>{
