@@ -31,7 +31,7 @@ app.post('/insert_player', (req, res)=>{
     // console.log(req.body);
     const data = req.body;
     const newPlayer = new Player({name : data.name, score : data.score});
-    newPlayer.save().then(res=>{
+    newPlayer.save().then(response=>{
         res.status(201).send({'status' : 'player created successfully'})
     }).catch(err=>{
         res.status(500).send({'status' : err});
@@ -39,6 +39,11 @@ app.post('/insert_player', (req, res)=>{
     // res.send({'status' : 'success'});
 })
 
+app.get('/delete', (req, res) => {
+    Player.remove({}, ()=>{
+        res.send({'status' : 'Deleted Successfully'});
+    })
+})
 
 app.listen(port, ()=>{
     console.log(`App listening to ${port}`);
