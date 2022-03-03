@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const DB = 'mongodb+srv://shivansh:wordrace@wordrace.mcvid.mongodb.net/WordRace?retryWrites=true&w=majority'
 
@@ -13,6 +14,7 @@ mongoose.connect(DB, {
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const port = process.env.PORT || 5000;
 
