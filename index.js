@@ -48,11 +48,11 @@ app.get('/delete', (req, res) => {
 })
 
 app.get('/number_of_games', (req, res)=>{
-    Player.count({}, (err, players)=>{
+    Player.countDocuments({}).exec((err, players)=>{
         if(err)
             res.send(err);
-        res.send(players);
-    })
+        res.json({'count' : players});
+    });
 })
 
 app.listen(port, ()=>{
