@@ -21,11 +21,31 @@ const port = process.env.PORT || 5000;
 const Player = require('./model/playerSchema');
 
 app.get('/', (req, res) => {
+    const data = {};
     Player.find({}, ['name', 'score'], {limit : 10, sort : {score : -1}}, (err, players)=>{
         if(err)
             res.send(err);
-        res.send(players);
+        data.players = players;
+        Player.count({}).exec((err, count)=>{
+            if(err)
+                res.send(err);
+            data.count = count;
+            Player.aggregate([{
+                $group : {
+                    _id : null,
+                    total : {
+                        $sum : "$score"
+                    }
+                }}]).exec((err, sum)=>{
+                if(err)
+                    res.send(err);
+                data.sum = sum;
+                res.json(data);
+            })
+        })
+        // res.send(players);
     })
+   ;
     // res.send('Hello World!')
 })
 
