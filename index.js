@@ -21,7 +21,7 @@ const port = process.env.PORT || 5000;
 const Player = require('./model/playerSchema');
 
 app.get('/', (req, res) => {
-    Player.find({}, (err, players)=>{
+    Player.find({}, ['name', 'score'], {limit : 10, sort : {score : -1}}, (err, players)=>{
         if(err)
             res.send(err);
         res.send(players);
@@ -44,6 +44,14 @@ app.post('/insert_player', (req, res)=>{
 app.get('/delete', (req, res) => {
     Player.remove({}, ()=>{
         res.send({'status' : 'Deleted Successfully'});
+    })
+})
+
+app.get('/number_of_games', (req, res)=>{
+    Player.count({}, (err, players)=>{
+        if(err)
+            res.send(err);
+        res.send(players);
     })
 })
 
